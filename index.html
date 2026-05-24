@@ -15,7 +15,7 @@
         body {
             font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ffe6f0 0%, #ffffff 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -122,6 +122,24 @@
         
         .value {
             color: #555;
+        }
+        
+        .editable {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .editable:hover.edit-mode {
+            background-color: #fff3e0;
+            border-radius: 4px;
+            padding: 2px 6px;
+        }
+        
+        .edit-mode .editable:hover {
+            background-color: #fff3e0;
+            border-radius: 4px;
+            padding: 2px 6px;
         }
         
         /* 性格・特徴セクション */
@@ -260,6 +278,139 @@
             padding: 10px;
         }
         
+        /* 編集ボタン */
+        .edit-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.8em;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 100;
+        }
+        
+        .edit-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(245, 87, 108, 0.6);
+        }
+        
+        /* モーダル */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .modal-content h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        
+        .modal-content input:focus {
+            outline: none;
+            border-color: #f5576c;
+            box-shadow: 0 0 10px rgba(245, 87, 108, 0.2);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .modal-buttons button {
+            padding: 10px 25px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.3);
+        }
+        
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+        
+        .edit-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 999;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .edit-status.show {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
         /* レスポンシブ */
         @media (max-width: 600px) {
             h1 {
@@ -273,17 +424,27 @@
             .info-section {
                 grid-template-columns: 1fr;
             }
+            
+            .edit-button {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+                font-size: 1.5em;
+            }
         }
         
         footer {
             text-align: center;
-            color: white;
+            color: #999;
             padding: 20px;
             margin-top: 30px;
         }
     </style>
 </head>
 <body>
+    <div class="edit-status" id="editStatus">✅ 編集モード有効</div>
+    
     <div class="container">
         <!-- ヘッダー -->
         <header>
@@ -306,26 +467,26 @@
         <div class="info-section">
             <div class="info-card">
                 <h3>👶 基本情報</h3>
-                <p><span class="label">名前：</span><span class="value">マロン</span></p>
-                <p><span class="label">品種：</span><span class="value">マルプー</span></p>
-                <p><span class="label">誕生日：</span><span class="value">YYYY年MM月DD日</span></p>
-                <p><span class="label">年齢：</span><span class="value">X歳</span></p>
+                <p><span class="label">名前：</span><span class="value editable" data-key="name">マロン</span></p>
+                <p><span class="label">品種：</span><span class="value editable" data-key="breed">マルプー</span></p>
+                <p><span class="label">誕生日：</span><span class="value editable" data-key="birthday">YYYY年MM月DD日</span></p>
+                <p><span class="label">年齢：</span><span class="value editable" data-key="age">X歳</span></p>
             </div>
             
             <div class="info-card">
                 <h3>🐾 体のサイズ</h3>
-                <p><span class="label">体重：</span><span class="value">X kg</span></p>
-                <p><span class="label">毛色：</span><span class="value">色を入力</span></p>
-                <p><span class="label">毛質：</span><span class="value">毛質を入力</span></p>
-                <p><span class="label">特徴：</span><span class="value">特徴を入力</span></p>
+                <p><span class="label">体重：</span><span class="value editable" data-key="weight">X kg</span></p>
+                <p><span class="label">毛色：</span><span class="value editable" data-key="color">色を入力</span></p>
+                <p><span class="label">毛質：</span><span class="value editable" data-key="hairType">毛質を入力</span></p>
+                <p><span class="label">特徴：</span><span class="value editable" data-key="feature">特徴を入力</span></p>
             </div>
             
             <div class="info-card">
                 <h3>✨ 健康情報</h3>
-                <p><span class="label">性格：</span><span class="value">性格を入力</span></p>
-                <p><span class="label">得意なこと：</span><span class="value">得意な技を入力</span></p>
-                <p><span class="label">苦手なこと：</span><span class="value">苦手なことを入力</span></p>
-                <p><span class="label">好物：</span><span class="value">好きな食べ物を入力</span></p>
+                <p><span class="label">性格：</span><span class="value editable" data-key="personality">性格を入力</span></p>
+                <p><span class="label">得意なこと：</span><span class="value editable" data-key="strength">得意な技を入力</span></p>
+                <p><span class="label">苦手なこと：</span><span class="value editable" data-key="weakness">苦手なことを入力</span></p>
+                <p><span class="label">好物：</span><span class="value editable" data-key="favorite">好きな食べ物を入力</span></p>
             </div>
         </div>
         
@@ -340,7 +501,7 @@
                 <div class="trait">遊び好き</div>
                 <div class="trait">可愛い💕</div>
             </div>
-            <p style="color: #666; margin-top: 20px; line-height: 1.8;">
+            <p class="editable" data-key="personalityDesc" style="color: #666; margin-top: 20px; line-height: 1.8;">
                 ここにマロンの詳しい性格説明を書いてください。<br>
                 例：マロンは非常に社交的で、新しい人や犬友達と会うことが大好きです。
                 とても活発で、毎日たくさん遊びたがります。一方、抱っこされるのも大好きで、
@@ -353,22 +514,22 @@
             <div class="likes-box">
                 <h3>💚 マロンが大好きなもの</h3>
                 <ul class="item-list">
-                    <li>ここに好きなものを入力</li>
-                    <li>ボール遊び</li>
-                    <li>おやつ</li>
-                    <li>飼い主さんとの時間</li>
-                    <li>公園でのお散歩</li>
+                    <li class="editable" data-key="like1">ここに好きなものを入力</li>
+                    <li class="editable" data-key="like2">ボール遊び</li>
+                    <li class="editable" data-key="like3">おやつ</li>
+                    <li class="editable" data-key="like4">飼い主さんとの時間</li>
+                    <li class="editable" data-key="like5">公園でのお散歩</li>
                 </ul>
             </div>
             
             <div class="dislikes-box">
                 <h3>❌ マロンが苦手なこと</h3>
                 <ul class="item-list">
-                    <li>ここに苦手なことを入力</li>
-                    <li>お風呂</li>
-                    <li>爪切り</li>
-                    <li>掃除機の音</li>
-                    <li>長時間のお留守番</li>
+                    <li class="editable" data-key="dislike1">ここに苦手なことを入力</li>
+                    <li class="editable" data-key="dislike2">お風呂</li>
+                    <li class="editable" data-key="dislike3">爪切り</li>
+                    <li class="editable" data-key="dislike4">掃除機の音</li>
+                    <li class="editable" data-key="dislike5">長時間のお留守番</li>
                 </ul>
             </div>
         </div>
@@ -376,14 +537,10 @@
         <!-- マロンのストーリー -->
         <div class="story-section">
             <h2>📖 マロンのストーリー</h2>
-            <p>
+            <p class="editable" data-key="story">
                 ここにマロンを迎えた時のエピソードを書いてください。<br>
                 例：マロンはXX年前にペットショップから迎えました。最初はとても怖がっていましたが、
-                今では家族の一員として、毎日元気いっぱいに過ごしています。
-            </p>
-            <p>
-                マロンの特別な思い出や、一緒に過ごした楽しい経験などを自由に書いてください。
-                マロンの成長の記録になります。
+                今���は家族の一員として、毎日元気いっぱいに過ごしています。
             </p>
         </div>
         
@@ -410,9 +567,114 @@
         </div>
         
         <footer>
-            <p>🐕 マロンのページへようこそ！ 💕</p>
+            <p>🐕 マロンのページへようこそ！ ����</p>
             <p>© 2026 マロン</p>
         </footer>
     </div>
+    
+    <!-- 編集ボタン -->
+    <button class="edit-button" id="editBtn">✏️</button>
+    
+    <!-- パスワード入力モーダル -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h2>🔐 編集モード</h2>
+            <p style="color: #666; margin-bottom: 20px;">パスワードを入力してください</p>
+            <input type="password" id="passwordInput" placeholder="パスワード" />
+            <div class="modal-buttons">
+                <button class="btn-submit" onclick="checkPassword()">確認</button>
+                <button class="btn-cancel" onclick="closePasswordModal()">キャンセル</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const EDIT_PASSWORD = "olive1012";
+        let isEditMode = false;
+        
+        // 編集ボタンクリック
+        document.getElementById('editBtn').addEventListener('click', function() {
+            document.getElementById('passwordModal').classList.add('show');
+            document.getElementById('passwordInput').focus();
+        });
+        
+        // パスワード確認
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === EDIT_PASSWORD) {
+                enableEditMode();
+                closePasswordModal();
+            } else {
+                alert('❌ パスワードが違います');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        // Enterキーで確認
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // パスワードモーダルを閉じる
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('show');
+            document.getElementById('passwordInput').value = '';
+        }
+        
+        // モーダル外クリックで閉じる
+        document.getElementById('passwordModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePasswordModal();
+            }
+        });
+        
+        // 編集モード有効化
+        function enableEditMode() {
+            isEditMode = true;
+            document.body.classList.add('edit-mode');
+            document.getElementById('editStatus').classList.add('show');
+            
+            // すべての編集可能な要素にクリックイベントを追加
+            document.querySelectorAll('.editable').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    if (isEditMode) {
+                        editElement(this);
+                    }
+                });
+            });
+            
+            setTimeout(() => {
+                document.getElementById('editStatus').classList.remove('show');
+            }, 3000);
+        }
+        
+        // 要素を編集
+        function editElement(element) {
+            const key = element.dataset.key;
+            const currentText = element.textContent.replace(/❤️\s|😞\s/g, '').trim();
+            
+            const newText = prompt('新しいテキストを入力してください:', currentText);
+            
+            if (newText !== null) {
+                element.textContent = newText;
+                // ローカルストレージに保存
+                localStorage.setItem('maron_' + key, newText);
+            }
+        }
+        
+        // ページロード時にローカルストレージから復元
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.editable').forEach(element => {
+                const key = element.dataset.key;
+                const savedValue = localStorage.getItem('maron_' + key);
+                if (savedValue) {
+                    element.textContent = savedValue;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
