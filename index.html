@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="olive1012のウェブサイト">
-    <title>My Website - olive1012</title>
+    <meta name="description" content="マロンの紹介ページ">
+    <title>🐕 マロン - トイプー×マルチーズのマルプー</title>
     <style>
         * {
             margin: 0;
@@ -13,142 +13,405 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
         }
         
         .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
+            border-radius: 15px;
             padding: 40px;
             text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
         h1 {
-            color: #333;
+            color: #f5576c;
+            font-size: 3em;
             margin-bottom: 10px;
-            font-size: 2.5em;
         }
         
         .subtitle {
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-        
-        p {
             color: #666;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1em;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-        
-        .secondary-btn {
-            background: #f0f0f0;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-        
-        .secondary-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-        
-        .content {
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 2px solid #eee;
-        }
-        
-        .feature {
-            display: inline-block;
-            margin: 15px;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .feature h3 {
-            color: #667eea;
+            font-size: 1.3em;
             margin-bottom: 10px;
         }
         
-        footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
+        .breed-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
+        /* 画像エリア */
+        .photo-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: white;
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+        
+        .photo-instructions {
+            margin-top: 15px;
+            color: #999;
+            font-size: 0.95em;
+        }
+        
+        /* 情報セクション */
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid #f5576c;
+        }
+        
+        .info-card h3 {
+            color: #f5576c;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .info-card p {
+            color: #666;
+            margin: 8px 0;
+            font-size: 1.05em;
+        }
+        
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .value {
+            color: #555;
+        }
+        
+        /* 性格・特徴セクション */
+        .personality-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .personality-section h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .traits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .trait {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        /* 好きなもの・嫌いなもの */
+        .likes-dislikes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .likes-box, .dislikes-box {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .likes-box h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .dislikes-box h3 {
+            color: #FF6B6B;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .item-list {
+            list-style: none;
+        }
+        
+        .item-list li {
+            padding: 8px 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .item-list li:before {
+            content: "❤️ ";
+            margin-right: 10px;
+        }
+        
+        .dislikes-box .item-list li:before {
+            content: "😞 ";
+            margin-right: 10px;
+        }
+        
+        /* ストーリーセクション */
+        .story-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .story-section h2 {
+            color: #f5576c;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .story-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        
+        /* ギャラリーセクション */
+        .gallery-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-section h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #999;
             font-size: 0.9em;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .likes-dislikes {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌐 My Website</h1>
-        <p class="subtitle">olive1012 のウェブサイトへようこそ</p>
+        <!-- ヘッダー -->
+        <header>
+            <h1>🐕 マロン</h1>
+            <p class="subtitle">我が家の可愛いワンちゃん</p>
+            <div class="breed-badge">🧬 トイプー × マルチーズ = マルプー</div>
+        </header>
         
-        <p>GitHub Pages で構築したあなたのウェブサイトです。<br>このページをカスタマイズしてあなたのポートフォリオを作成しましょう！</p>
-        
-        <div class="button-group">
-            <button onclick="alert('編集ボタンがクリックされました！')">✏️ 編集する</button>
-            <button class="secondary-btn" onclick="window.open('https://github.com/olive1012/My-website', '_blank')">📘 GitHub リポジトリ</button>
+        <!-- 写真セクション -->
+        <div class="photo-section">
+            <div class="photo-placeholder">
+                📸 ここにマロンの写真を入れます
+            </div>
+            <p class="photo-instructions">
+                💡 images/maron.jpg をこのフォルダに追加してください
+            </p>
         </div>
         
-        <div class="content">
-            <h2 style="color: #333; margin-bottom: 30px;">🎯 次のステップ</h2>
+        <!-- 基本情報 -->
+        <div class="info-section">
+            <div class="info-card">
+                <h3>👶 基本情報</h3>
+                <p><span class="label">名前：</span><span class="value">マロン</span></p>
+                <p><span class="label">品種：</span><span class="value">マルプー</span></p>
+                <p><span class="label">誕生日：</span><span class="value">YYYY年MM月DD日</span></p>
+                <p><span class="label">年齢：</span><span class="value">X歳</span></p>
+            </div>
             
-            <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-                <div class="feature">
-                    <h3>1️⃣ 設定</h3>
-                    <p>Settings → Pages から GitHub Pages を有効にしましょう</p>
+            <div class="info-card">
+                <h3>🐾 体のサイズ</h3>
+                <p><span class="label">体重：</span><span class="value">X kg</span></p>
+                <p><span class="label">毛色：</span><span class="value">色を入力</span></p>
+                <p><span class="label">毛質：</span><span class="value">毛質を入力</span></p>
+                <p><span class="label">特徴：</span><span class="value">特徴を入力</span></p>
+            </div>
+            
+            <div class="info-card">
+                <h3>✨ 健康情報</h3>
+                <p><span class="label">性格：</span><span class="value">性格を入力</span></p>
+                <p><span class="label">得意なこと：</span><span class="value">得意な技を入力</span></p>
+                <p><span class="label">苦手なこと：</span><span class="value">苦手なことを入力</span></p>
+                <p><span class="label">好物：</span><span class="value">好きな食べ物を入力</span></p>
+            </div>
+        </div>
+        
+        <!-- 性格・特徴 -->
+        <div class="personality-section">
+            <h2>🎭 マロンの性格</h2>
+            <div class="traits">
+                <div class="trait">明るい</div>
+                <div class="trait">甘えん坊</div>
+                <div class="trait">活発</div>
+                <div class="trait">おてんばさん</div>
+                <div class="trait">遊び好き</div>
+                <div class="trait">可愛い💕</div>
+            </div>
+            <p style="color: #666; margin-top: 20px; line-height: 1.8;">
+                ここにマロンの詳しい性格説明を書いてください。<br>
+                例：マロンは非常に社交的で、新しい人や犬友達と会うことが大好きです。
+                とても活発で、毎日たくさん遊びたがります。一方、抱っこされるのも大好きで、
+                いつも甘えてきます。
+            </p>
+        </div>
+        
+        <!-- 好きなもの・嫌いなもの -->
+        <div class="likes-dislikes">
+            <div class="likes-box">
+                <h3>💚 マロンが大好きなもの</h3>
+                <ul class="item-list">
+                    <li>ここに好きなものを入力</li>
+                    <li>ボール遊び</li>
+                    <li>おやつ</li>
+                    <li>飼い主さんとの時間</li>
+                    <li>公園でのお散歩</li>
+                </ul>
+            </div>
+            
+            <div class="dislikes-box">
+                <h3>❌ マロンが苦手なこと</h3>
+                <ul class="item-list">
+                    <li>ここに苦手なことを入力</li>
+                    <li>お風呂</li>
+                    <li>爪切り</li>
+                    <li>掃除機の音</li>
+                    <li>長時間のお留守番</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- マロンのストーリー -->
+        <div class="story-section">
+            <h2>📖 マロンのストーリー</h2>
+            <p>
+                ここにマロンを迎えた時のエピソードを書いてください。<br>
+                例：マロンはXX年前にペットショップから迎えました。最初はとても怖がっていましたが、
+                今では家族の一員として、毎日元気いっぱいに過ごしています。
+            </p>
+            <p>
+                マロンの特別な思い出や、一緒に過ごした楽しい経験などを自由に書いてください。
+                マロンの成長の記録になります。
+            </p>
+        </div>
+        
+        <!-- ギャラリー -->
+        <div class="gallery-section">
+            <h2>📷 マロンのギャラリー</h2>
+            <p style="color: #999; margin-bottom: 20px;">
+                後で images フォルダに写真を追加してください
+            </p>
+            <div class="gallery">
+                <div class="gallery-item">
+                    画像1<br>（maron1.jpg）
                 </div>
-                <div class="feature">
-                    <h3>2️⃣ カスタマイズ</h3>
-                    <p>このファイルを編集してあなたのコンテンツを追加しましょう</p>
+                <div class="gallery-item">
+                    画像2<br>（maron2.jpg）
                 </div>
-                <div class="feature">
-                    <h3>3️⃣ 公開</h3>
-                    <p>変更をコミットして、あなたのサイトを世界に公開しましょう</p>
+                <div class="gallery-item">
+                    画像3<br>（maron3.jpg）
+                </div>
+                <div class="gallery-item">
+                    画像4<br>（maron4.jpg）
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>© 2026 olive1012 | Built with GitHub Pages</p>
+            <p>🐕 マロンのページへようこそ！ 💕</p>
+            <p>© 2026 マロン</p>
         </footer>
     </div>
 </body>
